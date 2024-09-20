@@ -140,20 +140,21 @@ The application should now be running on `http://localhost:5173/`.
 
 Landing Page 
 
-![landingpage Dark](https://github.com/Tejas8303/teacher-appointment-booking/tree/main/screenshot/s1.png)
+![landingpage Dark](https://raw.githubusercontent.com/Tejas8303/teacher-appointment-booking/refs/heads/main/screenshot/s1.png)
 
 Student Dashboard
 
-![student dashboard dark](https://github.com/Tejas8303/teacher-appointment-booking/tree/main/screenshott/s2.png)
+![student dashboard dark](https://raw.githubusercontent.com/Tejas8303/teacher-appointment-booking/refs/heads/main/screenshot/s2.png)
 
 Teacher Dashboard
 
-![teacher d Dark](https://github.com/Tejas8303/teacher-appointment-booking/tree/main/screenshot/s3.png)
+![teacher d Dark](https://raw.githubusercontent.com/Tejas8303/teacher-appointment-booking/refs/heads/main/screenshot/s3.png)
 
 
 Admin Dashboard
 
-![admin ](https://github.com/Tejas8303/teacher-appointment-booking/tree/main/screenshot/s4.png)
+![admin ](https://github.com/Tejas8303/teacher-appointment-booking/blob/main/screenshot/s4.png?raw=true)
+
 
 ## Login
 
