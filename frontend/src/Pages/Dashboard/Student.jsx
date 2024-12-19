@@ -30,7 +30,7 @@ function Student() {
       setLectureDetails(response.data.appointments);
     } catch (error) {
       console.error("Error fetching data:", error);
-      setError("Error fetching data. Please try again later.");
+      toast.error("Error fetching data. Please try again later.");
     }
   };
 
@@ -137,7 +137,7 @@ function Student() {
         setSpinner(false);
         toast.success("Appointment booked successfully");
         fetchTable();
-        console.log("Appointment booked successfully:", response.data);
+        // console.log("Appointment booked successfully:", response.data);
       })
       .catch((error) => {
         setSpinner(false);

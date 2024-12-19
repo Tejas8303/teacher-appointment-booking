@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -45,21 +45,22 @@ function StudentLogin() {
       localStorage.setItem("Student Name", name);
       if (response.data.data.user.admissionStatus === true) {
         navigate(`/student/dashboard`);
-      } else {
+      } else{
         navigate("/student/notapproved");
       }
       toast.success("Logged in");
     } catch (error) {
       setSpinner(false);
       if (error.response) {
-        const errorMessage = error.response.data.message;
-        toast.error(errorMessage);
+        const errorMessage = error.response.data.message || "Invalid email or password";
+        toast.error(errorMessage); 
       } else {
-        toast.error("Login failed");
+        toast.error("Login failed. Please try again later.");
       }
     }
-  }
 
+  }
+  
   return (
     <>
       {spinner ? (

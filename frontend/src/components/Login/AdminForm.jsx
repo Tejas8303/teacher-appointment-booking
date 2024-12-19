@@ -23,30 +23,36 @@ function AdminLogin() {
 
   async function submitHandler(event) {
     event.preventDefault();
-
     try {
       setSpinner(true);
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/student/login`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/login`,
         {
           email: formData.email,
           password: formData.password,
         }
       );
-      if (response.data.data.user.roles !== "admin") {
+  
+      // console.log("API Response:", response.data);
+  
+      const user = response.data?.data?.user || response.data?.user;
+  
+      if (user?.roles !== "admin") {
         toast.error("Access denied. Only Admin are allowed to log in.");
         setSpinner(false);
         return;
       }
+  
       setSpinner(false);
       const { token } = response.data;
-      const name = response.data.data.user.name;
+      const name = user.roles;
       localStorage.setItem("Admin Name", name);
       localStorage.setItem("jwtToken", token);
       navigate("/admin/dashboard");
       toast.success("Logged in");
     } catch (error) {
       setSpinner(false);
+      console.error("Error:", error.response || error.message || error);
       if (error.response) {
         const errorMessage = error.response.data.message;
         toast.error(errorMessage);
@@ -55,6 +61,9 @@ function AdminLogin() {
       }
     }
   }
+  
+  
+  
 
   return (
     <>

@@ -16,12 +16,17 @@ exports.sendMessage = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllMessages = catchAsync(async (req, res, next) => {
-  const { email } = req.query;
-  const { user } = req;
 
-  const messages = await Message.find({ from: email, to: user.email });
+  const { email } = req.user;
+
+  if (!email) {
+    return next(new AppError("User email is missing in the token", 401));
+  }
+  const messages = await Message.find({ to: email });
 
   res.status(200).json({
+    status: "Success",
     messages,
   });
 });
+

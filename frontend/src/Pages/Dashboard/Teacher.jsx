@@ -16,6 +16,8 @@ function Teacher() {
   const [spinner, setSpinner] = useState(false);
   const [messageModal, setMessageModal] = useState(false);
   const [seduleModal, setSeduleModal] = useState(false);
+  const [approvedAppointments, setapprovedAppointments] = useState([]);
+
 
   const getCurrentDate = () => {
     const currentDate = new Date();
@@ -29,6 +31,34 @@ function Teacher() {
   const [unreadCount, setUnreadCount] = useState(0);
   const [messageCounts, setMessageCounts] = useState({});
   const [tableAppointments, setTableAppointments] = useState([]);
+
+  const fetchStudentData = async () => {
+    try {
+      const jwtToken = localStorage.getItem("Teacher jwtToken");
+      if (jwtToken == null) {
+        navigate("/teacher/login");
+      }
+      else {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/teachers/getApprovedAppointments`,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
+        // console.log(response.data.appointments);
+        setapprovedAppointments(response.data.appointments);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchStudentData();
+  }, []);
+
 
   const fetchData = async () => {
     try {
@@ -98,7 +128,7 @@ function Teacher() {
           },
         }
       );
-      console.log(response);
+      // console.log(response);
       setTableAppointments(response.data.appointments);
     } catch (error) {
       // console.log(error);
@@ -608,6 +638,79 @@ function Teacher() {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              <div className="py-4 ">
+                <h2 className="text-2xl font-semibold mb-4">Approved student Details</h2>
+                <hr className="mt-0 mb-4" />
+                <div className="hidden md:block overflow-x-auto">
+                  <table className="min-w-full text-center ">
+                    <thead>
+                      <tr className=" ">
+                        <th className="px-4 py-2">Sr.No</th>
+                        <th className="px-4 py-2">Name</th>
+                        <th className="px-4 py-2">Email</th>
+                        <th className="px-4 py-2">Date</th>       
+                        <th className="px-4 py-2">Schedule Time</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {approvedAppointments.map((appointment, index) => {
+                        const scheduleDate = new Date(appointment.scheduleAt);
+                        const formattedDate = scheduleDate.toLocaleDateString();
+                        const formattedTime = scheduleDate.toLocaleTimeString();
+
+                        return appointment.students.map((student, studentIndex) => {
+                          const studentInfo = student.studentId; // Extract student details
+                          return (
+                            <tr key={`${appointment._id}-${studentIndex}`} className="hover:bg-gray-100 dark:hover:bg-slate-950">
+                              <td className="border px-4 py-2">{index + 1}</td>
+                              <td className="border px-4 py-2">{studentInfo.name}</td>
+                              <td className="border px-4 py-2">{studentInfo.email}</td>
+                              <td className="border px-4 py-2">{formattedDate}</td>
+                              <td className="border px-4 py-2">{formattedTime}</td>
+                            </tr>
+                          );
+                        });
+                      })}
+
+
+                    </tbody>
+                  </table>
+                </div>
+                <div className="block md:hidden space-y-4">
+                  {approvedAppointments.map((appointment) => {
+                    const scheduleDate = new Date(appointment.scheduleAt);
+                    const formattedDate = scheduleDate.toLocaleDateString();
+                    const formattedTime = scheduleDate.toLocaleTimeString();
+
+                    return (
+                      <div
+                        key={appointment._id} // Use a unique key like `appointment._id` instead of `index`
+                        className="border border-gray-200 rounded-lg p-4 shadow-md bg-white dark:bg-slate-800 hover:dark:bg-slate-950"
+                      >
+                        <div className="flex justify-between items-center mb-2">
+                          <p className="font-semibold text-lg">Appointment</p>
+                        </div>
+                        <p className="mb-1">
+                          <span className="font-semibold">Email:</span>{" "}
+                          {appointment.students && appointment.students.length > 0
+                            ? appointment.students
+                              .map((student) => student.studentId?.email || "N/A")
+                              .join(", ")
+                            : "No students assigned"}
+                        </p>
+                        <p className="mb-1">
+                          <span className="font-semibold">Date:</span> {formattedDate}
+                        </p>
+                        <p>
+                          <span className="font-semibold">Schedule Time:</span> {formattedTime}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+
               </div>
 
             </section>

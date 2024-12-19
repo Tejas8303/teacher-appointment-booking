@@ -45,7 +45,7 @@ function StudentRegister() {
           toast.success("Account Created Successfully");
         } else {
           setSpinner(false);
-          console.log(response.data);
+          // console.log(response.data);
           toast.error("Failed to register");
         }
       })

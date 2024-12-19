@@ -22,13 +22,45 @@ const getUserAppointments = async (email, startDate, endDate) => {
 };
 
 exports.getAllPendingStudents = catchAsync(async (req, res, next) => {
-    const students = await Appointment.find({ sendBy: req.user.email, "students.approved": false }).populate({ path: "students.studentId", select: "_id name department email" }).select("-students.approved -students._id -sendBy");
+    if (!req.user || !req.user.email) {
+        return next(new AppError("User not authorized or email missing in token.", 401));
+    }
 
-    res.status(200).json({
-        status: "Success",
-        students
-    })
-})
+    try {
+        // Fetch appointments where the sender is the current user
+        const appointments = await Appointment.find({
+            sendBy: req.user.email,
+            "students.approved": false 
+        }).select("name scheduleAt students");
+
+        // Filter unapproved students for each appointment
+        const filteredAppointments = appointments.map(appointment => {
+            const unapprovedStudents = appointment.students.filter(student => !student.approved);
+            return {
+                _id: appointment._id,
+                name: appointment.name,
+                scheduleAt: appointment.scheduleAt,
+                students: unapprovedStudents
+            };
+        });
+
+        // Populate student details for unapproved students only
+        for (let appointment of filteredAppointments) {
+            for (let student of appointment.students) {
+                student.studentId = await User.findById(student.studentId).select("_id name department email");
+            }
+        }
+
+        res.status(200).json({
+            status: "Success",
+            students: filteredAppointments
+        });
+    } catch (error) {
+        console.error("Error fetching pending students:", error);
+        next(new AppError("Unable to fetch pending students", 500));
+    }
+});
+
 
 exports.getAllAppointments = catchAsync(async (req, res) => {
     const appointments = await Appointment.find({ sendBy: req.user.email });
@@ -39,36 +71,36 @@ exports.getAllAppointments = catchAsync(async (req, res) => {
 
 
 exports.createAppointment = catchAsync(async (req, res, next) => {
+    // console.log('Request User:', req.user);
+    // console.log('Schedule At:', req.body.scheduleAt);
 
     const sendBy = req.user.email;
     const name = req.user.name;
-    //const scheduleAt = new Date(2022, 10, 10, 14, 0, 0).toString(); // Replace with your desired date/time
-
     const scheduleAt = req.body.scheduleAt;
 
+    const newAppointment = await Appointment.create({ sendBy, name, scheduleAt });
+    console.log('New Appointment:', newAppointment);
 
-    const newAppointment = await Appointment.create({ sendBy, name, scheduleAt })
-    await User.findOneAndUpdate({ _id: req.user.id }, { $push: { appointments: newAppointment._id } })
+    await User.findOneAndUpdate(
+        { _id: req.user.id },
+        { $push: { appointments: newAppointment._id } }
+    );
+
     res.status(200).json({
         newAppointment
-    })
-
+    });
 });
+
 
 exports.approveAppointment = catchAsync(async (req, res) => {
     const appointment = await Appointment.findOneAndUpdate({ _id: req.params.id, "students.studentId": req.params.studentId }, {
         $set: {
-            'students.$.approved': true // Set the 'approved' field to true for the matched student
+            'students.$.approved': true 
         }
     });
-    // const studentEmail = await User.findById(req.params.studentId).select('email')
-    // console.log(studentEmail)
-    // const message = "your appointment is approved"
-
-    // let info = await transporter.sendMail({from:req.user.email,to:studentEmail.email,subject:"Book appointment",body:message})
 
     const studentEmail = await User.findById(req.params.studentId).select('email');
-    console.log(studentEmail)
+    // console.log(studentEmail)
     let info = await transporter.sendMail({
         from: '"tutor-time@brevo.com',
         to: studentEmail.email,
@@ -85,12 +117,6 @@ exports.approveAppointment = catchAsync(async (req, res) => {
     `,
     });
 
-
-
-
-
-
-
     res.status(200).json({ message: "Approved" });
 });
 
@@ -100,13 +126,11 @@ exports.dissapproveAppointment = catchAsync(async (req, res) => {
             'students': { 'studentId': req.params.studentId }
         }
     });
-    // const studentEmail = await User.findById(req.params.studentId).select('email')
-    // console.log(studentEmail)
-    // const message = "Your appointment is not approved"
-    // let info = await transporter.sendMail({from:req.user.email,to:studentEmail.email,subject:"Book appointment",body:message})
+    
+    
 
     const studentEmail = await User.findById(req.params.studentId).select('email');
-    console.log(studentEmail)
+    // console.log(studentEmail)
     let info = await transporter.sendMail({
         from: "abutalhasheikh33@gmail.com",
         to: studentEmail.email,
@@ -138,4 +162,40 @@ exports.getAllStudents = catchAsync(async (req, res) => {
     const filter = { roles: "student", ...req.query };
     const students = await User.find(filter).collation({ locale: 'en', strength: 2 });
     res.status(200).json({ students });
+});
+
+exports.getApprovedAppointments = catchAsync(async (req, res, next) => {
+    try {
+        // Fetch appointments where sendBy matches the current user and at least one student is approved
+        const appointments = await Appointment.find({
+            sendBy: req.user.email,
+            "students.approved": true,
+        })
+            .select("name scheduleAt students") 
+            .populate({
+                path: "students.studentId",
+                select: "name email department", 
+            });
+
+        // Filter out only approved students for each appointment
+        const approvedAppointments = appointments.map(appointment => {
+            const approvedStudents = appointment.students.filter(student => student.approved);
+            return {
+                _id: appointment._id,
+                name: appointment.name,
+                scheduleAt: appointment.scheduleAt,
+                students: approvedStudents,
+            };
+        });
+
+        // console.log("Approved Appointments:", approvedAppointments);
+
+        res.status(200).json({
+            status: "Success",
+            appointments: approvedAppointments,
+        });
+    } catch (error) {
+        console.error("Error fetching approved appointments:", error);
+        next(new AppError("Unable to fetch approved appointments", 500));
+    }
 });

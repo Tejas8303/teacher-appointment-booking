@@ -1,9 +1,11 @@
+const { default: JWTRedis } = require("jwt-redis");
 const Appointment = require("../models/Appointment");
 const User = require("../models/User");
 const AppError = require("../utils/AppError");
 const catchAsync = require("../utils/catchAsync");
 const { connect } = require("../utils/sendEmail");
 const { signToken } = require("./authController");
+const jwt = require('jsonwebtoken'); 
 const transporter = connect();
 
 const getTeacherWithAppointments = async (id) => {
@@ -28,7 +30,7 @@ exports.register = catchAsync(async (req, res, next) => {
     age: req.body.age,
   };
 
-  // Check if a user with the same email already exists
+
   const existing = await User.findOne({ email: user.email });
   if (existing) {
     return res.status(400).json({
@@ -38,38 +40,50 @@ exports.register = catchAsync(async (req, res, next) => {
   }
 
   const newUser = await User.create(user);
-  newUser.password = undefined;
 
-  const token = await signToken(
-    newUser._id,
-    newUser.roles,
-    newUser.name,
-    newUser.email,
-    newUser.admissionStatus
-  );
+  let token = jwt.sign(
+      {
+        id: newUser._id,
+        roles: 'student',
+        name: newUser.name,
+        email: newUser.email,
+        admissionStatus: newUser.admissionStatus,
+      },
+      process.env.JWT_KEY,
+      { expiresIn: '1h' }
+    );
 
   res.status(200).json({
     status: "SUCCESS",
     message: "Student created",
     data: {
-      newUser,
+      user: {
+        id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        department: newUser.department,
+        age: newUser.age,
+      },
     },
     token,
   });
 });
 
+
 exports.bookAppointment = catchAsync(async (req, res, next) => {
   const appointment = {
     _id: req.params.id,
   };
+  // console.log(appointment);
   const existingStudent = await Appointment.findOne({
+    _id:req.params.id,
     "students.studentId": req.user.id,
   });
-  console.log(existingStudent);
+  // console.log(existingStudent);
   if (existingStudent) {
     return next(new AppError("You have already booked the appointment", 500));
   }
-  /// mail
+
   const newAppointment = await Appointment.findOneAndUpdate(
     appointment,
     { $push: { students: { studentId: req.user.id, approved: false } } },

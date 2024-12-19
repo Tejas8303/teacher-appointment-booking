@@ -2,7 +2,6 @@ const nodemailer = require('nodemailer')
 
 exports.connect = () => {
     try {
-        //transporter 
         let transporter = nodemailer.createTransport({
             host: process.env.MAIL_HOST,
             auth: {

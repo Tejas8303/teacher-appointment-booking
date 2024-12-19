@@ -90,6 +90,8 @@ To run this project locally, follow these steps:
     DB_URL=''
     JWT_KEY = ''
     PORT = 5000
+    ADMIN_EMAIL=' '
+    ADMIN_PASSWORD=' '
 
     # mail integration 
 

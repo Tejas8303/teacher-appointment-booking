@@ -34,30 +34,62 @@ function Admin() {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+    useEffect(() => {
+      fetchData();
+    }, []);
 
   const [students, setStudents] = useState([]);
+  const [stud, setStud] = useState([]);
+
+  const fetchStudents = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/teachers`,
+        {
+          params: {
+            admissionStatus: false,
+          },
+        }
+      );
+      setStudents(response.data.students);
+    } catch (error) {
+      console.error("Error fetching students data:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/v1/teachers`,
-          {
-            params: {
-              admissionStatus: false,
-            },
-          }
-        );
-        setStudents(response.data.students);
-      } catch (error) {
-        console.error("Error fetching students data:", error);
-      }
-    };
-
     fetchStudents();
+  }, []);
+
+  const fetchApprovedStudents = async () => {
+    try {
+      const jwtToken = localStorage.getItem("jwtToken");
+      if (!jwtToken) {
+        navigate("/admin/login");
+        return;
+      }
+
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/teachers`,
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+          params: {
+            admissionStatus: true,  
+          },
+        }
+      );
+
+      // console.log("Approved students fetched:", response.data.students);
+      setStud(response.data.students);
+    } catch (error) {
+      console.error("Error fetching approved students data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchApprovedStudents();
   }, []);
 
   const handleDeleteTeacher = async (_id, index) => {
@@ -73,7 +105,7 @@ function Admin() {
         updatedTeachers.splice(index, 1);
         setTeachers(updatedTeachers);
         toast.success("Teacher deleted successfully");
-        console.log(res)
+        // console.log(res)
       }).catch((error) => {
         console.error("Error deleting teacher:", error);
         toast.error("Error deleting teacher");
@@ -136,8 +168,14 @@ function Admin() {
       });
       setIsModalOpen(false);
       toast.success("Teacher Added");
+
+      // console.log(requestData);
+      // console.log(jwtToken);
+      // console.log(import.meta.env.VITE_BACKEND_URL);
+
     } catch (error) {
       if (error.response) {
+        console.log(error.response);
         const errorMessage = error.response.data.message;
         toast.error(errorMessage);
       } else {
@@ -156,8 +194,7 @@ function Admin() {
       setSpinner(true);
       const jwtToken = localStorage.getItem("jwtToken");
       await axios.patch(
-        `${import.meta.env.VITE_BACKEND_URL
-        }/api/v1/admin/approvestudent/${_id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/approvestudent/${_id}`,
         null,
         {
           headers: {
@@ -165,14 +202,18 @@ function Admin() {
           },
         }
       );
-      setSpinner(false);
+
       toast.success("Student approved successfully");
-    } catch (error) {
+
+      fetchApprovedStudents();
       setSpinner(false);
+    } catch (error) {
       console.error("Error approving student:", error);
-      toast.error("Error approving student");
+      setSpinner(false);
+      toast.error("Failed to approve the student");
     }
   };
+
 
   const deleteStudent = async (_id) => {
     try {
@@ -187,7 +228,7 @@ function Admin() {
         }
       );
       setSpinner(false);
-      toast.info("Student rejected successfully");
+      // toast.info("Student rejected successfully");
     } catch (error) {
       setSpinner(false);
       console.error("Error rejecting student:", error);
@@ -333,30 +374,18 @@ function Admin() {
                   </thead>
                   <tbody>
                     {teachers.map((teacher, index) => (
-                      <tr
-                        key={index}
-                        className="hover:bg-gray-100 hover:dark:bg-slate-950 text-center"
-                      >
-                        <td className="border px-4 py-2">{index + 1}</td>
-                        <td className="border px-4 py-2">{teacher.name}</td>
-                        <td className="border px-4 py-2">
-                          {teacher.subject.join(", ")}
-                        </td>
-                        <td className="border px-4 py-2">
-                          {teacher.department}
-                        </td>
-                        <td className="border px-4 py-2">
+                      <tr key={teacher._id}>
+                        <td className="px-4 py-2">{index + 1}</td>
+                        <td className="px-4 py-2">{teacher.name}</td>
+                        <td className="px-4 py-2">{teacher.subject}</td>
+                        <td className="px-4 py-2">{teacher.department}</td>
+                        <td className="px-4 py-2">
                           <button
-                            className={`bg-red-500 text-white rounded px-4 py-2`}
                             onClick={() => handleDeleteTeacher(teacher._id, index)}
-                            disabled={
-                              teacher._id === "6685a20d5be29facb5059f24" ||
-                              teacher._id === "6685a7f197d78621a37725d8"
-                            }
+                            className="text-red-600 hover:text-red-800"
                           >
                             <MdDelete />
                           </button>
-
                         </td>
                       </tr>
                     ))}
@@ -374,7 +403,7 @@ function Admin() {
                         <p className="font-semibold text-lg">
                           Teacher {index + 1}
                         </p>
-                        {console.log(teacher._id)}
+                        {/* {console.log(teacher._id)} */}
                         <button
                           className={`bg-red-500 text-white rounded px-4 py-2`}
                           onClick={() => handleDeleteTeacher(teacher._id, index)}
@@ -446,7 +475,7 @@ function Admin() {
                           onClick={() => {
                             handleApproveReject(student._id);
                             deleteStudent(student._id);
-                            toast.info("Student Rejected");
+                            // toast.info("Student Rejected");
                           }}
                           disabled={
                             student._id === "66859c6ba5dda7d5bfe203e5" || student._id ===
@@ -459,8 +488,57 @@ function Admin() {
                     </div>
                   ))}
                 </div>
+
               </div>
             </div>
+
+            <div className="py-4 container">
+              <h2 className="text-2xl font-semibold mb-4">Approved Students</h2>
+              <hr className="mt-0 mb-4" />
+              <div className="hidden md:block overflow-x-auto">
+                <table className="min-w-full text-center">
+                  <thead>
+                    <tr>
+                      <th className="px-4 py-2">Sr.No</th>
+                      <th className="px-4 py-2">Name</th>
+                      <th className="px-4 py-2">Email</th>
+                      <th className="px-4 py-2">Age</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {stud.length > 0 ? (
+                      stud.map((student, index) => (
+                        <tr key={student._id}>
+                          <td className="px-4 py-2">{index + 1}</td>
+                          <td className="px-4 py-2">{student.name}</td>
+                          <td className="px-4 py-2">{student.email}</td>
+                          <td className="px-4 py-2">{student.age}</td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="4" className="text-center">
+                          No students approved for admission.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="block md:hidden space-y-4">
+                {stud.map((student, index) => (
+                  <div key={index} className="border border-gray-200 rounded-lg p-4 shadow-md bg-white dark:bg-slate-800 hover:dark:bg-slate-950">
+                    <p><strong>Sr. No:</strong> {index + 1}</p>
+                    <p><strong>Name:</strong> {student.name}</p>
+                    <p><strong>Email:</strong> {student.email}</p>
+                    <p><strong>Age:</strong> {student.age}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
           </section>
         </>
       )}
