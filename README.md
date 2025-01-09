@@ -18,8 +18,8 @@ This is a MERN stack project designed to facilitate the booking of appointments 
 
 ## Features
 - Admin management for adding, updating, and deleting teachers and approving student registrations.
-- Teacher functionalities for managing their appointment schedules, approving/cancelling appointments, sending email alerts to students, viewing messages, and viewing all appointments.
-- Student functionalities for registering, booking appointments with teachers, sending email alerts to teachers, and sending messages.
+- Teacher functionalities for managing their appointment schedules, approving/cancelling appointments, sending email alerts to students,and viewing all appointments.
+- Student functionalities for registering, booking appointments with teachers, sending email alerts to teachers .
 
 ## System Modules
 
@@ -33,7 +33,6 @@ This is a MERN stack project designed to facilitate the booking of appointments 
 - Schedule Appointment
 - Approve/Cancel Appointment
 - Send Email Alerts to Students
-- View Messages
 - View All Appointments
 
 ### Student
@@ -41,7 +40,6 @@ This is a MERN stack project designed to facilitate the booking of appointments 
 - Login
 - Book Appointment
 - Send Email Alert to Teacher
-- Send Message
 
 ## Tech-Stack-Used
 
@@ -95,8 +93,8 @@ To run this project locally, follow these steps:
 
     # mail integration 
 
-    MAIL_HOST = smtp.gmail.com
-    MAIL_USER = 'your_mail'
+    MAIL_HOST = smtp.ethereal.com
+    MAIL_USER = ''
     MAIL_PASS = 
     ```
 
@@ -131,12 +129,12 @@ The application should now be running on `http://localhost:5173/`.
     - Log in to the teacher portal.
     - Schedule, approve, or cancel appointments.
     - Send email alerts to students.
-    - View messages and all appointments.
+    - View all appointments.
 
 3. **Student:**
     - Register and log in to the student portal.
     - Book appointments with teachers.
-    - Send email alerts and messages to teachers.
+    - Send email alerts to teachers.
 
 ## Screenshots
 

@@ -234,7 +234,6 @@ exports.approveStudent = catchAsync(async (req, res, next) => {
   });
 });
 
-
 exports.deleteStudent = catchAsync(async (req, res, next) => {
   await User.findByIdAndDelete(req.params.id);
 

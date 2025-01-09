@@ -461,7 +461,6 @@ function Admin() {
                           onClick={() => {
                             handleApproveReject(student._id);
                             approveStudent(student._id);
-                            toast.success("Student Approved");
                           }}
                           disabled={
                             student._id === "66859c6ba5dda7d5bfe203e5" || student._id ===
