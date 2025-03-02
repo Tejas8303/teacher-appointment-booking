@@ -66,14 +66,14 @@ function StudentLogin() {
       {spinner ? (
         <Spinner />
       ) : (
-        <section className="bg-gray-100 dark:bg-slate-900 min-h-screen flex items-center justify-center p-8 w-full">
-          <div className="bg-white rounded-lg dark:bg-slate-800 dark:text-white dark:border-gray-200 dark:border shadow-lg p-8 w-full max-w-md">
+        <section className="bg-gray-100 dark:bg-[#0B0C14] min-h-screen flex items-center justify-center p-8 w-full">
+          <div className="bg-white rounded-lg dark:bg-[#0F101A] dark:text-white dark:border-gray-200 dark:border shadow-lg p-8 w-full max-w-md">
             <div className="flex flex-col  items-center">
               <h2 className="font-bold text-2xl">Student Login</h2>
               <p className="text-sm mt-4 dark:text-gray-300">If you are already a member, easy login</p>
-              <form className="flex flex-col  gap-3 mt-4 w-full dark:bg-slate-800" onSubmit={submitHandler}>
+              <form className="flex flex-col  gap-3 mt-4 w-full dark:bg-[#0F101A]" onSubmit={submitHandler}>
                 <input
-                  className="mt-3 p-2 border rounded dark:bg-slate-700"
+                  className="mt-3 p-2 border rounded dark:bg-[#0F101A]  "
                   type="email"
                   name="email"
                   value={formData.email}
@@ -82,7 +82,7 @@ function StudentLogin() {
                 />
                 <label >Email: student@gmail.com</label>
                 <input
-                  className="mt-3 p-2 border rounded dark:bg-slate-700"
+                  className="mt-3 p-2 border rounded dark:bg-[#0F101A]"
                   type="password"
                   name="password"
                   value={formData.password}
@@ -94,10 +94,10 @@ function StudentLogin() {
                   <input
                     type="submit"
                     value="Login"
-                    className="bg-blue-500 text-white p-2 rounded cursor-pointer hover:bg-blue-600 w-full"
+                    className="bg-[#5b63d3] text-white p-2 rounded cursor-pointer hover:bg-[#5b63f3] w-full"
                   />
                   <Link to="/student/signup" className="w-full">
-                    <button className="bg-blue-500 text-white p-2 rounded cursor-pointer hover:bg-blue-600 w-full">
+                    <button className="bg-[#5b63d3] text-white p-2 rounded cursor-pointer hover:bg-[#5b63f3]   w-full">
                       Register
                     </button>
                   </Link>

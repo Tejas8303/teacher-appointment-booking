@@ -169,7 +169,7 @@ function Student() {
           {showModal && (
             <div className="fixed inset-0 z-50 overflow-y-auto">
               <div className="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-90 transition-opacity">
-                <div className="bg-white dark:bg-slate-800 dark:text-white rounded-lg shadow-lg w-full max-w-md mx-4 sm:mx-auto">
+                <div className="bg-white dark:bg-[#0F101B]   dark:text-white rounded-lg shadow-lg w-full max-w-md mx-4 sm:mx-auto">
                   <div className="border-b border-gray-200 p-4">
                     <h5 className="text-lg font-medium text-gray-900 dark:text-white">
                       Message Modal
@@ -178,7 +178,7 @@ function Student() {
                   <form onSubmit={submitHandler}>
                     <div className="p-4">
                       <input
-                        className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300 dark:bg-slate-700"
+                        className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-100 dark:bg-[#0F101B]"
                         type="text"
                         name="message"
                         value={formData.message}
@@ -197,7 +197,7 @@ function Student() {
                       <input
                         type="submit"
                         value="Send Message"
-                        className="ml-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        className="ml-2 px-4 py-2 bg-[#5b63d3] text-white rounded hover:bg-[#5b63f3]"
                       // onClick={() => setShowModal(false)}
                       />
                     </div>
@@ -210,9 +210,9 @@ function Student() {
           {/* header */}
           <Header
             name="Student Dashboard"
-            style="bg-gradient-to-r from-cyan-500 to-blue-500"
+            style="bg-gradient-to-c from-cyan-500 to-blue-500"
           />
-          <div className="px-4 dark:bg-slate-900 dark:text-white">
+          <div className="px-4 w-full min-h-svh dark:bg-[#0B0C14] dark:text-white">
             {/* info table */}
             <div className="container mx-auto py-4">
               <h2 className="text-2xl font-bold mb-2">
@@ -234,7 +234,7 @@ function Student() {
                     {lectureDetails.map((detail, index) => (
                       <tr
                         key={index}
-                        className="bg-gray-100 dark:bg-slate-800 text-center hover:dark:bg-slate-950"
+                        className="bg-gray-100 dark:bg-[#0F101B] text-center hover:dark:bg-slate-950"
                       >
                         <td className="border px-4 py-2">{index + 1}</td>
                         <td className="border px-4 py-2">{detail.name}</td>
@@ -254,14 +254,14 @@ function Student() {
               )}
             </div>
             {/* card container */}
-            <div className="container mx-auto py-4">
+            <div className="container mx-auto py-4 h-full">
               <div className="pagecontent">
                 <h2 className="text-2xl font-bold mb-2">All teachers</h2>
                 <hr className="mt-0 mb-4" />
-                <div className="flex flex-wrap justify-center gap-4">
+                <div className="flex flex-wrap gap-4">
                   {teachers.map((teacher, index) => (
                     <div
-                      className="rounded max-w-80 border shadow-lg p-4 flex flex-col gap-6 justify-between dark:text-white"
+                      className="rounded max-w-80 border shadow-lg p-4 flex flex-col gap-2 justify-between dark:text-white dp"
                       key={index}
                     >
                       <div>
@@ -270,8 +270,8 @@ function Student() {
                           className="w-full"
                           alt="..."
                         />
-                        <div className="px-6 py-4 flex flex-col gap-4 ">
-                          <h5 className="font-bold text-xl mb-2">
+                        <div className="px-6 py-1 flex flex-col gap-4 ">
+                          <h5 className="font-bold text-xl ">
                             Name: {teacher.name}
                           </h5>
                           <p className="text-gray-700 text-base dark:text-gray-400">
@@ -299,7 +299,7 @@ function Student() {
                                   </p>
                                   <div className="">
                                     <button
-                                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                      className="bg-[#5b63d3] hover:bg-[#5b63f3] text-white font-bold py-2 px-4 rounded"
                                       onClick={() =>
                                         handleBookAppointment(
                                           appointment._id,
@@ -309,6 +309,7 @@ function Student() {
                                     >
                                       Book Appointment
                                     </button>
+                                    
                                   </div>
                                 </div>
                               )
@@ -322,7 +323,7 @@ function Student() {
                       </div>
                       <div className="">
                         <button
-                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded border w-full"
+                          className="bg-[#5b63d3] hover:bg-[#5b63f3] text-white font-bold py-2 px-4 rounded border w-full"
                           type="button"
                           data-bs-toggle="modal"
                           data-bs-target="#messageModal"

@@ -246,21 +246,21 @@ function Admin() {
             name="Admin Dashboard"
             style="bg-gradient-to-r from-[#F64C18] to-[#EE9539]"
           />
-          <section className="dark:bg-slate-900 dark:text-white px-6 py-4">
+          <section className="dark:bg-[#0B0C14] dark:text-white px-6 py-4">
             <div className=" container">
               <div className="pagecontent">
                 <h2 className="text-2xl font-semibold mb-4">Status</h2>
                 <hr className="mt-0 mb-4" />
                 <div className="flex justify-center text-center">
                   <div
-                    className="bg-blue-500 min-w-80 text-white rounded-lg shadow-lg flex flex-col justify-between h-40 "
+                    className="bg-[#0F101B] min-w-80 text-white rounded-lg shadow-lg flex flex-col justify-between h-40 "
                     onClick={() => setIsModalOpen(true)}
                   >
                     <div className="p-4 flex flex-col gap-4">
                       <p className="text-2xl font-bold">Total Teachers</p>
                       <p className="text-xl">{teachers.length}</p>
                     </div>
-                    <div className="flex justify-center border-t items-center py-2 cursor-pointer hover:bg-blue-600 rounded-b-lg">
+                    <div className="flex justify-center border-t items-center py-2 cursor-pointer hover:bg-[#5b63f3] rounded-b-lg">
                       Add Teacher
                     </div>
                   </div>
@@ -269,14 +269,14 @@ function Admin() {
             </div>
             {/* modal */}
             {isModalOpen && (
-              <div className="fixed inset-0 bg-gray-800 bg-opacity-90 flex justify-center items-center z-50">
-                <div className="bg-white dark:bg-slate-800 border rounded-lg shadow-lg p-6 max-w-md mx-4 sm:mx-auto">
+              <div className="fixed inset-0 bg-[#0F101B] bg-opacity-90 flex justify-center items-center z-50">
+                <div className="bg-white dark:bg-[#0F101A] border rounded-lg shadow-lg p-6 max-w-md mx-4 sm:mx-auto">
                   <div className="flex justify-between items-center border-b pb-3">
                     <h1 className="text-lg font-semibold">Add Teacher</h1>
                   </div>
                   <form onSubmit={submitHandler} className="mt-4 space-y-4">
                     <input
-                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300 dark:bg-slate-700"
+                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300 dark:bg-[#0F101A]"
                       type="text"
                       name="name"
                       value={formData.name}
@@ -285,7 +285,7 @@ function Admin() {
                       required
                     />
                     <input
-                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300 dark:bg-slate-700"
+                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300 dark:bg-[#0F101A]"
                       type="text"
                       name="department"
                       value={formData.department}
@@ -294,7 +294,7 @@ function Admin() {
                       required
                     />
                     <input
-                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300 dark:bg-slate-700"
+                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300 dark:bg-[#0F101A]"
                       type="text"
                       name="subject"
                       value={formData.subject}
@@ -303,7 +303,7 @@ function Admin() {
                       required
                     />
                     <input
-                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300 dark:bg-slate-700"
+                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300 dark:bg-[#0F101A]"
                       type="number"
                       name="age"
                       value={formData.age}
@@ -312,7 +312,7 @@ function Admin() {
                       required
                     />
                     <input
-                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300 dark:bg-slate-700"
+                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300 dark:bg-[#0F101A]"
                       type="email"
                       value={formData.email}
                       onChange={changeHandler}
@@ -321,7 +321,7 @@ function Admin() {
                       required
                     />
                     <input
-                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300 dark:bg-slate-700"
+                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300 dark:bg-[#0F101A]"
                       type="password"
                       name="password"
                       value={formData.password}
@@ -330,7 +330,7 @@ function Admin() {
                       required
                     />
                     <input
-                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300 dark:bg-slate-700"
+                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300 dark:bg-[#0F101A]"
                       type="password"
                       value={formData.passwordConfirm}
                       onChange={changeHandler}
@@ -348,7 +348,7 @@ function Admin() {
                       </button>
                       <button
                         type="submit"
-                        className="bg-blue-500 text-white rounded px-4 py-2 hover:bg-blue-600 focus:outline-none"
+                        className="bg-[#5b63d3] text-white rounded px-4 py-2 hover:bg-[#5b63f3] focus:outline-none"
                       >
                         Add Teacher
                       </button>

@@ -16,10 +16,9 @@ import TodayDate from "./components/UI/TodayDate";
 import Spinner from "./components/UI/Spinner";
 function App() {
   return (
-    <>
+    <div className="w-full h-screen">
       <BrowserRouter>
         <Navbar />
-
         <TodayDate />
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -35,7 +34,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 

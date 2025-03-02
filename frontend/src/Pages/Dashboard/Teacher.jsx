@@ -328,7 +328,7 @@ function Teacher() {
                 className="fixed inset-0 bg-gray-500 bg-opacity-90 transition-opacity"
               ></div>
               <div className="inline-block align-bottom bg-white  rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div className="bg-white dark:bg-slate-800  px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div className="bg-white dark:bg-[#0F101A]  px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   <h1
                     className="text-lg font-medium text-gray-900 dark:text-white"
                   >
@@ -345,8 +345,8 @@ function Teacher() {
                             type="button"
                             className={`inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md ${highlightedTimeSlot ===
                               `${getCurrentDate()}T14:00:00`
-                              ? "text-white bg-blue-600 hover:bg-blue-700"
-                              : "text-blue-700 bg-blue-100 hover:bg-blue-200"
+                              ? "text-white bg-[#0F101A] hover:bg-gray-100"
+                              : "text-[#0F101A] bg-white hover:bg-gray-200"
                               }`}
                             onClick={() =>
                               handleTimeSlotSelect(
@@ -360,8 +360,8 @@ function Teacher() {
                             type="button"
                             className={`inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md ${highlightedTimeSlot ===
                               `${getCurrentDate()}T17:00:00`
-                              ? "text-white bg-blue-600 hover:bg-blue-700"
-                              : "text-blue-700 bg-blue-100 hover:bg-blue-200"
+                              ? "text-white bg-[#0F101A] hover:bg-gray-100"
+                              : "text-[#0F101A] bg-white hover:bg-gray-200"
                               }`}
                             onClick={() =>
                               handleTimeSlotSelect(
@@ -375,8 +375,8 @@ function Teacher() {
                             type="button"
                             className={`inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md ${highlightedTimeSlot ===
                               `${getCurrentDate()}T19:00:00`
-                              ? "text-white bg-blue-600 hover:bg-blue-700"
-                              : "text-blue-700 bg-blue-100 hover:bg-blue-200"
+                              ? "text-white bg-[#0F101A] hover:bg-gray-100"
+                              : "text-[#0F101A] bg-white hover:bg-gray-200"
                               }`}
                             onClick={() =>
                               handleTimeSlotSelect(
@@ -403,7 +403,7 @@ function Teacher() {
                       </button>
                       <input
                         type="submit"
-                        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 ml-4 hover:cursor-pointer"
+                        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-[#5b63d3] hover:bg-[#5b63f3] ml-4 hover:cursor-pointer"
                       />
                     </div>
                   </form>
@@ -414,7 +414,7 @@ function Teacher() {
           {/* student message modal */}
           {messageModal && (<div className="fixed inset-0 z-50 overflow-y-auto">
             <div className="flex justify-center items-center min-h-screen text-center bg-gray-500 bg-opacity-90 transition-opacity">
-              <div className="bg-white rounded-lg dark:bg-slate-800 shadow-xl w-full max-w-lg mx-4 sm:mx-auto">
+              <div className="bg-white rounded-lg dark:bg-[#0F101B]  shadow-xl w-full max-w-lg mx-4 sm:mx-auto">
                 <div className="border-b border-gray-200 p-4">
                   <h5 className="text-lg font-medium text-gray-900 dark:text-white">Student Message</h5>
                 </div>
@@ -434,7 +434,7 @@ function Teacher() {
                   >
                     Close
                   </button>
-                  <button type="button" className="ml-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onClick={() => {/* Code to send message and close the modal */ }}>
+                  <button type="button" className="ml-2 px-4 py-2 bg-[#5b63d3] text-white rounded hover:bg-[#5b63f3]" onClick={() => {/* Code to send message and close the modal */ }}>
                     Send Message
                   </button>
                 </div>
@@ -444,19 +444,19 @@ function Teacher() {
 
 
           {/* dashbord container */}
-          <div className="dark:bg-slate-900 dark:text-white">
+          <div className="dark:bg-[#0B0C14] dark:text-white">
 
             <section className="container p-6  " >
               <h2 className="text-2xl font-semibold mb-4">Status</h2>
               <hr className="mt-0 mb-4" />
               <div className="flex justify-center text-center">
-                <div className="bg-blue-500 min-w-80 text-white rounded-lg shadow-lg flex flex-col justify-between h-40"
+                <div className="bg-[#0F101B] min-w-80 text-white rounded-lg shadow-lg flex flex-col justify-between h-40"
                   onClick={() => setSeduleModal(true)}>
                   <div className="p-4 flex flex-col gap-4">
                     <p className="text-2xl font-bold">Schedule Appointment</p>
                     <p className="text-xl">{tableAppointments.length}</p>
                   </div>
-                  <div className="flex justify-center border-t items-center py-2 cursor-pointer hover:bg-blue-600 rounded-b-lg">
+                  <div className="flex justify-center border-t items-center py-2 cursor-pointer hover:bg-[#5b63f3] rounded-b-lg">
                     Add Schedule
                   </div>
                 </div>
@@ -487,7 +487,7 @@ function Teacher() {
                         const formattedTime = scheduleDate.toLocaleTimeString();
 
                         return (
-                          <tr key={index} className="hover:bg-gray-100 dark:hover:bg-slate-950">
+                          <tr key={index} className="hover:bg-gray-100 dark:hover:bg-[#0B0C14]">
                             <td className="border px-4 py-2">{index + 1}</td>
                             <td className="border px-4 py-2">{appointment.name}</td>
                             <td className="border px-4 py-2">{appointment.sendBy}</td>
@@ -517,7 +517,7 @@ function Teacher() {
                     const formattedTime = scheduleDate.toLocaleTimeString();
 
                     return (
-                      <div key={index} className="border border-gray-200 rounded-lg p-4 shadow-md bg-white dark:bg-slate-800 hover:dark:bg-slate-950">
+                      <div key={index} className="border border-gray-200 rounded-lg p-4 shadow-md bg-white dark:bg-[#0B0C14] hover:dark:bg-[#0B0C14]">
                         <div className="flex justify-between items-center mb-2">
                           <p className="font-semibold text-lg">Appointment {index + 1}</p>
                           <button
@@ -568,14 +568,14 @@ function Teacher() {
                         return (
                           <div
                             key={studentId}
-                            className="card-body border shadow-lg rounded-lg p-4 w-72"
+                            className="card-body border shadow-lg rounded-lg  w-72"
                           >
                             <img
                               src="https://static.vecteezy.com/system/resources/previews/001/942/923/large_2x/student-boy-with-school-suitcase-back-to-school-free-vector.jpg"
                               className="w-full h-64 object-cover rounded-t-lg"
                               alt="Student"
                             />
-                            <div className="p-4 bg-gray-50 rounded-b-lg dark:bg-slate-800 border ">
+                            <div className="p-4 bg-gray-50 rounded-b-lg dark:bg-[#0F101A] border ">
                               <h5 className="text-xl font-semibold mb-2">
                                 {name}
                               </h5>
@@ -650,7 +650,7 @@ function Teacher() {
                         <th className="px-4 py-2">Sr.No</th>
                         <th className="px-4 py-2">Name</th>
                         <th className="px-4 py-2">Email</th>
-                        <th className="px-4 py-2">Date</th>       
+                        <th className="px-4 py-2">Date</th>
                         <th className="px-4 py-2">Schedule Time</th>
                       </tr>
                     </thead>

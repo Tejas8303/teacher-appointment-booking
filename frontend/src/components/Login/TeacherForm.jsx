@@ -63,14 +63,14 @@ function Teacher() {
       {spinner ? (
         <Spinner />
       ) : (
-        <section className="bg-gray-100 dark:bg-slate-900 dark:text-white dark:border-gray-200 min-h-screen flex items-center justify-center p-8 w-full">
-          <div className="bg-white rounded-lg dark:bg-slate-800 dark:text-white dark:border-gray-200 dark:border shadow-lg p-8 w-full max-w-md">
+        <section className="bg-gray-100 dark:bg-[#0B0C14] dark:text-white dark:border-gray-200 min-h-screen flex items-center justify-center p-8 w-full">
+          <div className="bg-white rounded-lg dark:bg-[#0F101A] dark:text-white dark:border-gray-200 dark:border shadow-lg p-8 w-full max-w-md">
             <div className="flex flex-col items-center">
               <h2 className="font-bold text-2xl">Teacher Login</h2>
               <p className="text-sm mt-4">If you are already a member, easy login</p>
               <form className="flex flex-col gap-3 mt-4 w-full" onSubmit={submitHandler}>
                 <input
-                  className="mt-3 p-2 border rounded dark:bg-slate-700"
+                  className="mt-3 p-2 border rounded dark:bg-[#0F101A]"
                   type="email"
                   name="email"
                   value={formData.email}
@@ -79,7 +79,7 @@ function Teacher() {
                 />
                 <label>Email: teacher@gmail.com</label>
                 <input
-                  className="mt-3 p-2 border rounded dark:bg-slate-700"
+                  className="mt-3 p-2 border rounded dark:bg-[#0F101A]"
                   type="password"
                   name="password"
                   value={formData.password}
@@ -91,7 +91,7 @@ function Teacher() {
                   <input
                     type="submit"
                     value="Login"
-                    className="bg-blue-500 text-white p-2 rounded cursor-pointer hover:bg-blue-600 w-full"
+                    className="bg-[#5b63d3] text-white p-2 rounded cursor-pointer hover:bg-[#5b63f3] w-full"
                   />
                 </div>
               </form>
