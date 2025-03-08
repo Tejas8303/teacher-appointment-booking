@@ -3,6 +3,12 @@
 
 This is a MERN stack project designed to facilitate the booking of appointments between students and teachers. The system includes functionalities for admins to manage teachers, for teachers to manage their appointments, and for students to book appointments with teachers.
 
+
+## 🚀 Live Demo  
+
+🔹 **Student/Teacher App**: [Main Website](https://teacher-appointment-frontend.onrender.com)  
+🔹 **Backend API**: [API Server](https://teacher-appointment-backend.onrender.com)
+
 ## Table of Contents
 - [Features](#features)
 - [System Modules](#system-modules)
